@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const client = axios.create({
-  baseURL: 'http://api.weatherstack.com',
+  baseURL: 'https://api.tomorrow.io/v4/weather',
 });

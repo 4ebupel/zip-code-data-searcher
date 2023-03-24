@@ -8,76 +8,29 @@ export default {
   },
   data() {
     return {
-      info: {
-        // "request": {
-        //   "type": "Zipcode",
-        //   "query": "36525",
-        //   "language": "en",
-        //   "unit": "m"
-        // },
-        // "location": {
-        //   "name": "Creola",
-        //   "country": "USA",
-        //   "region": "Alabama",
-        //   "lat": "30.889",
-        //   "lon": "-88.026",
-        //   "timezone_id": "America/Chicago",
-        //   "localtime": "2023-03-23 16:28",
-        //   "localtime_epoch": 1679588880,
-        //   "utc_offset": "-5.0"
-        // },
-        // "current": {
-        //   "observation_time": "09:28 PM",
-        //   "temperature": 26,
-        //   "weather_code": 116,
-        //   "weather_icons": [
-        //     "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0002_sunny_intervals.png"
-        //   ],
-        //   "weather_descriptions": [
-        //     "Partly cloudy"
-        //   ],
-        //   "wind_speed": 22,
-        //   "wind_degree": 170,
-        //   "wind_dir": "S",
-        //   "pressure": 1021,
-        //   "precip": 0,
-        //   "humidity": 58,
-        //   "cloudcover": 75,
-        //   "feelslike": 29,
-        //   "uv_index": 5,
-        //   "visibility": 16,
-        //   "is_day": "yes"
-        // }
-      },
       errorStatus: false,
       isLoading: false,
       isWeather: !this.errorStatus,
     }
   },
   props: {
-    zip: String,
-  },
-  mounted() {
-    getInfo(this.zip)
-      .then(({ data }) => {
-        this.info = data;
-      });
+    info: {},
   }
 }
 </script>
 
 <template>
   <Header :innerText="`Your data & weather report`" />
+  <h1 v-if="isLoading">Wait a sec...</h1>
   <section v-if="!isLoading" class="background">
-    <h1 v-if="isLoading">Wait a sec...</h1>
-    <div class="card" style="width: 18rem;" v-if="!errorStatus">
+    <div class="card" style="width: 18rem;" v-if="!isLoading">
       <div class="card-body">
         <h5 class="card-title">Your City is: {{ info.location.name.split(',')[0] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">More data</h6>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Your contry is: {{ info.location.country.split(',')[4] }}</li>
-          <li class="list-group-item">Your state is: {{ info.location.region.split(',')[2] }}</li>
-          <li class="list-group-item">Your ZIP code is: {{ info.location.country.split(',')[3] }}</li>
+          <li class="list-group-item">Your contry is: {{ info.location.name.split(',')[3] }}</li>
+          <li class="list-group-item">Your state is: {{ info.location.name.split(',')[1] }}</li>
+          <li class="list-group-item">Your ZIP code is: {{ info.location.name.split(',')[2] }}</li>
         </ul>
         <a href="/" class="btn btn-dark">Home</a>
         <a href="#" class="btn btn-dark">Toggle weather</a>

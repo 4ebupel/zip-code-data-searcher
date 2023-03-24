@@ -11,9 +11,6 @@ export default {
       zip: ''
     }
   },
-  // updated() {
-  //   console.log(this.zip);
-  // },
   emits: ['change'],
   methods: {
     handleSubmit() {
@@ -34,7 +31,8 @@ export default {
         <input 
           class="form-control" 
           id="floatingInput" 
-          placeholder="ZIP code" 
+          placeholder="ZIP code"
+          required
           v-model="zip"
         >
         <label for="floatingInput">Please, enter your ZIP code</label>

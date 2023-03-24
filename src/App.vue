@@ -1,6 +1,7 @@
 <script>
 import HomePage from './pages/HomePage.vue';
 import InfoPage from './pages/InfoPage.vue';
+import { getInfo } from './api/zipInfo';
 
 export default {
   components: {
@@ -10,6 +11,8 @@ export default {
   data() {
     return {
       zip: '',
+      info: '',
+      errorStatus: false,
     }
   },
   computed: {
@@ -17,12 +20,20 @@ export default {
       return this.zip.length === 5 && Boolean(Number(this.zip));
     }
   },
+  watch: {
+    zip() {
+      getInfo(this.zip)
+        .then(({ data }) => {
+          this.info = data;
+        });
+    }
+  }
 }
 </script>
 
 <template>
-  <HomePage @change="zip = $event" v-if="!isZipValid"/>
-  <InfoPage :zip="zip" v-else-if="isZipValid"/>
+  <HomePage @change="zip = $event" v-if="!isZipValid" />
+  <InfoPage :info="info" v-else-if="isZipValid && info" />
 </template>
 
 <style></style>

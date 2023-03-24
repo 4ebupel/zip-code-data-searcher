@@ -1,5 +1,4 @@
 <script>
-import { getInfo } from '../api/zipInfo';
 import Header from '../components/Header.vue';
 
 export default {
@@ -28,9 +27,9 @@ export default {
         <h5 class="card-title">Your City is: {{ info.location.name.split(',')[0] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">More data</h6>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Your contry is: {{ info.location.name.split(',')[3] }}</li>
-          <li class="list-group-item">Your state is: {{ info.location.name.split(',')[1] }}</li>
-          <li class="list-group-item">Your ZIP code is: {{ info.location.name.split(',')[2] }}</li>
+          <li class="list-group-item">Your contry is: {{ info.location.name.split(',')[4] }}</li>
+          <li class="list-group-item">Your state is: {{ info.location.name.split(',')[2] }}</li>
+          <li class="list-group-item">Your ZIP code is: {{ info.location.name.split(',')[3] }}</li>
         </ul>
         <a href="/" class="btn btn-dark">Home</a>
         <a href="#" class="btn btn-dark">Toggle weather</a>

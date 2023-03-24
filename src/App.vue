@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     isZipValid() {
-      return this.zip.length === 5 && Boolean(Number(this.zip));
+      return Boolean(Number(this.zip));
     }
   },
   watch: {

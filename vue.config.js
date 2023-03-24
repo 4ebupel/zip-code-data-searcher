@@ -1,3 +1,3 @@
 export default defineConfig({
-  base: '/zip-code-data-searcher/'
+  base: '/zip-code-data-searcher'
 });

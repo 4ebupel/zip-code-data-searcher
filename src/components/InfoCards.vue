@@ -54,7 +54,7 @@ export default {
         </button>
       </div>
       <div class="card-footer">
-        <small class="text-muted">Observation time: {{ info.timelines.daily[0].time }}</small>
+        <small class="text-muted">Observation time: {{ info.timelines.daily[0].time.split('T')[0] }}</small>
       </div>
     </div>
     <Modal />

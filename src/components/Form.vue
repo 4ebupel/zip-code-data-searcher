@@ -30,6 +30,7 @@ export default {
           id="floatingInput" 
           placeholder="ZIP code"
           required
+          minlength="5"
           maxlength="5"
           v-model="zip"
         >

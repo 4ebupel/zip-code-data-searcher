@@ -25,6 +25,13 @@ export default {
         this.info = data;
       });
     this.isLoading = false;
+  },
+  methods: {
+    handleBackToHome() {
+      window.location.replace(
+        'https://4ebupel.github.io/zip-code-data-searcher/',
+      );
+    }
   }
 }
 </script>
@@ -41,7 +48,7 @@ export default {
           <li class="list-group-item">Your state is: {{ info.location.name.split(',')[2] }}</li>
           <li class="list-group-item">Your ZIP code is: {{ info.location.name.split(',')[3] }}</li>
         </ul>
-        <a href="https://4ebupel.github.io/zip-code-data-searcher/" class="btn btn-dark">Home</a>
+        <button @click="handleBackToHome" class="btn btn-dark">Home</button>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
           IP LookUp
         </button>

@@ -2,6 +2,7 @@
 import Header from './Header.vue';
 import Loader from './Loader.vue';
 import Modal from './Modal.vue';
+import { getInfo } from '../api/zipInfo';
 
 export default {
   components: {
@@ -11,19 +12,27 @@ export default {
   },
   data() {
     return {
-      errorStatus: false,
+      isLoading: true,
+      info: {},
     }
   },
   props: {
-    info: '',
+    zip: '',
+  },
+  async mounted() {
+    await getInfo(this.zip)
+      .then(({ data }) => {
+        this.info = data;
+      });
+    this.isLoading = false;
   }
 }
 </script>
 
 <template>
   <section class="background">
-    <Loader v-if="!info" />
-    <div class="card" style="width: 18rem;" v-if="info && !errorStatus">
+    <Loader v-if="isLoading" />
+    <div class="card" style="width: 18rem;" v-if="info && !isLoading">
       <div class="card-body">
         <h5 class="card-title">Your City is: {{ info.location.name.split(',')[0] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">More data</h6>
@@ -42,24 +51,15 @@ export default {
       </div>
     </div>
     <Modal />
-    <div class="card" v-if="info && !errorStatus">
-      <div class="card-header">{{ info.location.name.split(',')[0] }} °C</div>
+    <div class="card" v-if="info && !isLoading">
+      <div class="card-header">Temperature in {{ info.location.name.split(',')[0] }} °C</div>
       <div class="card-body">
         <div class="row">
-          <div class="col text-center" v-for="(day, index) in info.timelines.daily">
+          <div v-for="(day, index) in info.timelines.daily" :key="index" class="col text-center">
             <div>{{ day.time.split('T')[0].split('-')[2] }}</div>
             <div>{{ day.values.temperatureApparentAvg }}</div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;" v-if="errorStatus">
-      <div class="card-header">Error</div>
-      <div class="card-body">
-        <h5 class="card-title">Something went wrong</h5>
-        <p class="card-text">Reload the page or try again later if it won't help - contact us at: supportExample@gmail.com
-        </p>
-        <a href="/" class="btn btn-dark">Home</a>
       </div>
     </div>
   </section>

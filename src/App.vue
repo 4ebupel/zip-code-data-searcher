@@ -25,7 +25,7 @@ export default {
 </script>
 
 <template>
-  <Header :innerText="`ZIP code info searcher`" v-if="!info"/>
+  <Header :innerText="`ZIP code info searcher`" v-if="!isZipValid"/>
   <Header :innerText="`Your data & weather report`" v-else/>
   <Form @change="zip = $event" v-if="!isZipValid" />
   <InfoCards :zip="zip" v-else />

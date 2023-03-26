@@ -1,28 +1,30 @@
 <script>
-import Header from '../components/Header.vue';
+import Header from './Header.vue';
+import Loader from './Loader.vue';
 
 export default {
   components: {
     Header,
+    Loader,
   },
   data() {
     return {
       errorStatus: false,
       isLoading: false,
-      isWeather: !this.errorStatus,
     }
   },
   props: {
-    info: {},
+    info: '',
   }
 }
 </script>
 
 <template>
-  <Header :innerText="`Your data & weather report`" />
+  <!-- <Header :innerText="`Your data & weather report`" /> -->
   <h1 v-if="isLoading">Wait a sec...</h1>
   <section v-if="!isLoading" class="background">
-    <div class="card" style="width: 18rem;" v-if="!isLoading">
+    <Loader v-if="!info"/>
+    <div class="card" style="width: 18rem;" v-if="info">
       <div class="card-body">
         <h5 class="card-title">Your City is: {{ info.location.name.split(',')[0] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">More data</h6>
@@ -32,7 +34,6 @@ export default {
           <li class="list-group-item">Your ZIP code is: {{ info.location.name.split(',')[3] }}</li>
         </ul>
         <a href="/" class="btn btn-dark">Home</a>
-        <a href="#" class="btn btn-dark">Toggle weather</a>
       </div>
       <div class="card-footer">
         <small class="text-muted">Observation time: {{ info.timelines.daily[0].time }}</small>
@@ -57,7 +58,7 @@ export default {
   padding: 24px;
   justify-content: flex-start;
   align-items: center;
-  height: 85vh;
+  height: 75vh;
   background-image: url('../imgs/jude-infantini-mI-QcAP95Ok-unsplash.jpg');
   object-fit: fill;
   background-position: center;

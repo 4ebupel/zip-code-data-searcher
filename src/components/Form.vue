@@ -1,5 +1,5 @@
 <script>
-import Header from '../components/Header.vue';
+import Header from './Header.vue';
 
 export default {
   components: {
@@ -22,8 +22,6 @@ export default {
 </script>
 
 <template>
-  <Header :innerText="`ZIP code info searcher`" />
-
   <section class="backgroundImgSection">
     <form @submit.prevent="handleSubmit" class="homeForm">
       <div class="form-floating mb-3">
@@ -40,9 +38,6 @@ export default {
       <button type="submit" class="btn btn-primary homeFormBtn">Find</button>
     </form>
   </section>
-  <footer class="footer">
-    <h1 class="footerText">Any intel for reasonable price - your privacy</h1>
-  </footer>
 </template>
 
 <style>
@@ -70,19 +65,5 @@ export default {
 .homeFormBtn {
   width: 40%;
   align-self: center;
-}
-
-.footer {
-  height: 10vh;
-  background-color: #252525;
-  width: 100%;
-  text-align: center;
-}
-
-.footerText {
-  line-height: 10vh;
-  font-size: 20px;
-  color: #767676;
-  margin: 0;
 }
 </style>

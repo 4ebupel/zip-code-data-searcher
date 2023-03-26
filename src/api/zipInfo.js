@@ -6,7 +6,8 @@ export const getInfo = (zip) => {
 };
 
 export const getIp = () => {
-  return axios.get('https://api.ipify.org?format=json&callback=getIP');
+  // return axios.get('https://api.ipify.org?format=json&callback=getIP');
+  return axios.get('https://ipinfo.io/json?token=2b816b218384cc');
 };
 
 export const getOtherData = () => {

@@ -43,6 +43,7 @@ export default {
             <li class="list-group-item">Your OS: {{ info.os_meta.name }}</li>
             <li class="list-group-item">Your OS version: {{ info.os_meta.version }}</li>
             <li class="list-group-item">Your browser: {{ info.ua_family }}</li>
+            <li class="list-group-item">Your ISP: {{ ip.org }}</li>
           </ul>
         </div>
         <div class="modal-footer">

@@ -1,6 +1,6 @@
 <script>
 import Form from './components/Form.vue';
-import InfoCard from './components/InfoCard.vue';
+import InfoCards from './components/InfoCards.vue';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import { getInfo } from './api/zipInfo';
@@ -8,7 +8,7 @@ import { getInfo } from './api/zipInfo';
 export default {
   components: {
     Form,
-    InfoCard,
+    InfoCards,
     Header,
     Footer,
   },
@@ -16,7 +16,6 @@ export default {
     return {
       zip: '',
       info: '',
-      errorStatus: false,
     }
   },
   computed: {
@@ -39,7 +38,7 @@ export default {
   <Header :innerText="`ZIP code info searcher`" v-if="!info"/>
   <Header :innerText="`Your data & weather report`" v-else/>
   <Form @change="zip = $event" v-if="!isZipValid" />
-  <InfoCard :info="info" v-else />
+  <InfoCards :info="info" v-else />
   <Footer />
 </template>
 

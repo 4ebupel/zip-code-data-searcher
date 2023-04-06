@@ -5,6 +5,10 @@ export const getInfo = (zip) => {
 
 };
 
+export const getLocationInfo = (zip) => {
+  return axios.get(`https://api.zippopotam.us/us/${zip}`)
+};
+
 export const getIp = () => {
   // return axios.get('https://api.ipify.org?format=json&callback=getIP');
   return axios.get('https://ipinfo.io/json?token=2b816b218384cc');

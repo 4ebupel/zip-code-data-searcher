@@ -2,7 +2,7 @@
 import Header from './Header.vue';
 import Loader from './Loader.vue';
 import Modal from './Modal.vue';
-import { getInfo } from '../api/zipInfo';
+import { getLocationInfo } from '../api/zipInfo';
 
 export default {
   components: {
@@ -20,7 +20,7 @@ export default {
     zip: '',
   },
   async mounted() {
-    await getInfo(this.zip)
+    await getLocationInfo(this.zip)
       .then(({ data }) => {
         this.info = data;
       });
@@ -41,12 +41,12 @@ export default {
     <Loader v-if="isLoading" />
     <div class="card" style="width: 18rem;" v-if="info && !isLoading">
       <div class="card-body">
-        <h5 class="card-title">Your City is: {{ info.location.name.split(',')[0] }}</h5>
+        <h5 class="card-title">Your City is: {{ info.places[0]['place name'] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">More data</h6>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Your contry is: {{ info.location.name.split(',')[4] }}</li>
-          <li class="list-group-item">Your state is: {{ info.location.name.split(',')[2] }}</li>
-          <li class="list-group-item">Your ZIP code is: {{ info.location.name.split(',')[3] }}</li>
+          <li class="list-group-item">Your contry is: {{ info.country }}</li>
+          <li class="list-group-item">Your state is: {{ info.places[0].state }}</li>
+          <li class="list-group-item">Your ZIP code is: {{ info['post code'] }}</li>
         </ul>
         <button @click="handleBackToHome" class="btn btn-dark">Home</button>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
@@ -54,11 +54,11 @@ export default {
         </button>
       </div>
       <div class="card-footer">
-        <small class="text-muted">Observation time: {{ info.timelines.daily[0].time.split('T')[0] }}</small>
+        <!-- <small class="text-muted">Observation time: {{ info.timelines.daily[0].time.split('T')[0] }}</small> -->
       </div>
     </div>
     <Modal />
-    <div class="card" v-if="info && !isLoading">
+    <!-- <div class="card" v-if="info && !isLoading">
       <div class="card-header">Temperature in {{ info.location.name.split(',')[0] }} °C</div>
       <div class="card-body">
         <div class="row">
@@ -68,7 +68,7 @@ export default {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </section>
 </template>
 
@@ -92,5 +92,14 @@ export default {
 
 .btn {
   margin-right: 8px;
+}
+
+@media (max-width: 960px) {
+  .background {
+    height: 85vh;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 }
 </style>

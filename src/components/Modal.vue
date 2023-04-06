@@ -20,17 +20,18 @@ export default {
       .then(({ data }) => {
         this.ip = data;
       });
-    await getOtherData()
-      .then(({ data }) => {
-        this.info = data;
-      });
+    // await getOtherData()
+    //   .then(({ data }) => {
+    //     this.info = data;
+    //   });
     this.isLoading = false;
   }
 }
 </script>
 
 <template>
-  <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"  v-if="!isLoading">
+  <Loader v-if="isLoading"/>
+  <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"  v-else>
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -40,9 +41,9 @@ export default {
         <div class="modal-body">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Your IP: {{ ip.ip }}</li>
-            <li class="list-group-item">Your OS: {{ info.os_meta.name }}</li>
+            <!-- <li class="list-group-item">Your OS: {{ info.os_meta.name }}</li>
             <li class="list-group-item">Your OS version: {{ info.os_meta.version }}</li>
-            <li class="list-group-item">Your browser: {{ info.ua_family }}</li>
+            <li class="list-group-item">Your browser: {{ info.ua_family }}</li> -->
             <li class="list-group-item">Your ISP: {{ ip.org }}</li>
           </ul>
         </div>

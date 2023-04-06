@@ -20,6 +20,7 @@
   text-align: center;
   box-shadow: 0px 8px 8px 0px #00000040;
   margin: 0;
+
 }
 
 .heading {
@@ -27,5 +28,16 @@
   color: #fff;
   font-size: 44px;
   margin: 0;
+}
+
+@media (max-width: 960px) {
+  .header {
+    height: 10vh;
+  }
+
+  .heading {
+    font-size: 26px;
+    line-height: 10vh;
+  }
 }
 </style>

@@ -67,4 +67,21 @@ export default {
   width: 40%;
   align-self: center;
 }
+
+@media (max-width: 960px) {
+  .backgroundImgSection {
+    height: 80vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+  }
+
+  .homeForm {
+    width: 100%;
+  }
+
+  .homeFormBtn {
+    width: 80%;
+  }
+}
 </style>

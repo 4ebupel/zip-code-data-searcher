@@ -2,7 +2,7 @@
 import Header from './Header.vue';
 import Loader from './Loader.vue';
 import Modal from './Modal.vue';
-import { getLocationInfo } from '../api/zipInfo';
+import { getLocationInfo, getWeatherInfo } from '../api/zipInfo';
 
 export default {
   components: {
@@ -14,6 +14,7 @@ export default {
     return {
       isLoading: true,
       info: {},
+      weather: []
     }
   },
   props: {
@@ -24,6 +25,12 @@ export default {
       .then(({ data }) => {
         this.info = data;
       });
+
+    await getWeatherInfo(this.zip)
+      .then(({ data }) => {
+        this.weather = data.data[0];
+      });
+    console.log(this.weather);
     this.isLoading = false;
   },
   methods: {
@@ -39,7 +46,7 @@ export default {
 <template>
   <section class="background">
     <Loader v-if="isLoading" />
-    <div class="card" style="width: 18rem;" v-if="info && !isLoading">
+    <div class="card" style="width: 18rem;" v-if="info && weather && !isLoading">
       <div class="card-body">
         <h5 class="card-title">Your City is: {{ info.places[0]['place name'] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">More data</h6>
@@ -53,22 +60,23 @@ export default {
           IP LookUp
         </button>
       </div>
-      <div class="card-footer">
-        <!-- <small class="text-muted">Observation time: {{ info.timelines.daily[0].time.split('T')[0] }}</small> -->
-      </div>
     </div>
     <Modal />
-    <!-- <div class="card" v-if="info && !isLoading">
-      <div class="card-header">Temperature in {{ info.location.name.split(',')[0] }} °C</div>
-      <div class="card-body">
-        <div class="row">
-          <div v-for="(day, index) in info.timelines.daily" :key="index" class="col text-center">
-            <div>{{ day.time.split('T')[0].split('-')[2] }}</div>
-            <div>{{ day.values.temperatureApparentAvg }}</div>
-          </div>
-        </div>
+    <div class="card" v-if="info && weather && !isLoading">
+      <div class="card-body weather--card">
+        <h5 class="card-title">Weather in {{ info.places[0]['place name'] }}</h5>
+        <img :src="`https://www.weatherbit.io/static/img/icons/${weather.weather.icon}.png`" class="icon" />
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Temperature is: {{ weather.temp }} °C</li>
+          <li class="list-group-item">Feels like: {{ weather.app_temp }} °C</li>
+          <li class="list-group-item">Wind speed: {{ weather.wind_spd }} m/s</li>
+          <li class="list-group-item">Wind direction: {{ weather.wind_cdir_full }}</li>
+        </ul>
       </div>
-    </div> -->
+      <div class="card-footer">
+        <small class="text-muted">Observation time: {{ weather.ob_time }}</small>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -90,16 +98,35 @@ export default {
   align-self: center;
 }
 
+.weather--card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .btn {
   margin-right: 8px;
 }
 
+.icon {
+  display: block;
+  width: 60%;
+}
+
 @media (max-width: 960px) {
   .background {
-    height: 85vh;
+    flex-direction: column;
+
+    height: fit-content;
 
     background-repeat: no-repeat;
     background-size: cover;
+  }
+
+  .icon {
+    display: block;
+    width: 50%;
   }
 }
 </style>

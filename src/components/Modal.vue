@@ -1,6 +1,6 @@
 <script>
 import Loader from './Loader.vue';
-import { getIp, getOtherData } from '../api/zipInfo';
+import { getIp } from '../api/zipInfo';
 
 export default {
   components: {
@@ -41,9 +41,9 @@ export default {
         <div class="modal-body">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Your IP: {{ ip.ip }}</li>
-            <!-- <li class="list-group-item">Your OS: {{ info.os_meta.name }}</li>
-            <li class="list-group-item">Your OS version: {{ info.os_meta.version }}</li>
-            <li class="list-group-item">Your browser: {{ info.ua_family }}</li> -->
+            <li class="list-group-item">Your city: {{ ip.city }}</li>
+            <li class="list-group-item">Your region: {{ ip.region }}</li>
+            <li class="list-group-item">Your country: {{ ip.country }}</li>
             <li class="list-group-item">Your ISP: {{ ip.org }}</li>
           </ul>
         </div>

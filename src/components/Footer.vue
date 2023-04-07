@@ -20,13 +20,6 @@
 }
 
 @media (max-width: 960px) {
-  .footer {
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-  }
-  
   .footerText {
     font-size: 12px;
   }

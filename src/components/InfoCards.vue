@@ -13,6 +13,7 @@ export default {
   data() {
     return {
       isLoading: true,
+      isError: false,
       info: {},
       weather: []
     }
@@ -21,17 +22,23 @@ export default {
     zip: '',
   },
   async mounted() {
-    await getLocationInfo(this.zip)
-      .then(({ data }) => {
-        this.info = data;
-      });
+    try {
+      await getLocationInfo(this.zip)
+        .then(({ data }) => {
+          this.info = data;
+        });
 
-    await getWeatherInfo(this.zip)
-      .then(({ data }) => {
-        this.weather = data.data[0];
-      });
-    console.log(this.weather);
-    this.isLoading = false;
+      await getWeatherInfo(this.zip)
+        .then(({ data }) => {
+          this.weather = data.data[0];
+        });
+      console.log(this.weather);
+      this.isLoading = false;
+    } catch (error) {
+      this.isError = true;
+    } finally {
+      this.isLoading = false;
+    }
   },
   methods: {
     handleBackToHome() {
@@ -45,8 +52,12 @@ export default {
 
 <template>
   <section class="background">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="isError">
+      <strong>Oooopsie!</strong> Looks like some of our services are broken. Please check your zip code input or try again later.
+      <button type="button" class="btn-close" @click="handleBackToHome" data-bs-dismiss="alert" aria-label="Close" />
+    </div>
     <Loader v-if="isLoading" />
-    <div class="card" style="width: 18rem;" v-if="info && weather && !isLoading">
+    <div class="card" style="width: 18rem;" v-if="info && !isLoading && !isError">
       <div class="card-body">
         <h5 class="card-title">Your City is: {{ info.places[0]['place name'] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">More data</h6>
@@ -62,7 +73,7 @@ export default {
       </div>
     </div>
     <Modal />
-    <div class="card" v-if="info && weather && !isLoading">
+    <div class="card" v-if="info && weather && !isLoading && !isError">
       <div class="card-body weather--card">
         <h5 class="card-title">Weather in {{ info.places[0]['place name'] }}</h5>
         <img :src="`https://www.weatherbit.io/static/img/icons/${weather.weather.icon}.png`" class="icon" />
@@ -117,6 +128,8 @@ export default {
 @media (max-width: 960px) {
   .background {
     flex-direction: column;
+
+    min-height: 80vh;
 
     height: fit-content;
 

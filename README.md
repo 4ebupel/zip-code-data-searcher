@@ -7,7 +7,7 @@
 ## General info
 Zip Code Data Searcher is a SPA that allows users to search for basic information about zip codes in the United States. 
 This tool uses data from the tomorrow.io API to provide information such as the zip code's city, country, and more.
-Also this app gives user an opportunity to lookUp their IP address, browser, OS type and version.
+Also this app gives user an opportunity to lookUp their IP address and ISP.
 	
 ## Technologies
 Project is created with:
